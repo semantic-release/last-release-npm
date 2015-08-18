@@ -20,6 +20,7 @@ test('last release from registry', (t) => {
       tt.error(err)
       tt.is(release.version, '1.33.7', 'version')
       tt.is(release.gitHead, 'HEAD', 'gitHead')
+      tt.is(release.tag, 'latest', 'dist-tag')
 
       tt.end()
     })
@@ -33,6 +34,7 @@ test('last release from registry', (t) => {
       tt.error(err)
       tt.is(release.version, '0.8.15', 'version')
       tt.is(release.gitHead, 'bar', 'gitHead')
+      tt.is(release.tag, 'foo', 'dist-tag')
 
       tt.end()
     })
@@ -57,6 +59,7 @@ test('last release from registry', (t) => {
       tt.error(err)
       tt.is(release.version, '1.33.7', 'version')
       tt.is(release.gitHead, 'HEAD', 'gitHead')
+      tt.is(release.tag, 'latest', 'dist-tag')
 
       tt.end()
     })

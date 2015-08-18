@@ -4,7 +4,7 @@ const npmlog = require('npmlog')
 const RegClient = require('npm-registry-client')
 
 module.exports = function (pluginConfig, {pkg, npm, plugins}, cb) {
-  npmlog.level = npm.loglevel || 'error'
+  npmlog.level = npm.loglevel || 'warn'
   const client = new RegClient({log: npmlog})
 
   client.get(`${npm.registry}${pkg.name.replace('/', '%2F')}`, {
@@ -19,7 +19,11 @@ module.exports = function (pluginConfig, {pkg, npm, plugins}, cb) {
 
     cb(null, {
       version,
-      gitHead: data.versions[version].gitHead
+      gitHead: data.versions[version].gitHead,
+      get tag () {
+        npmlog.warn('deprecated', 'tag will be removed with the next major release')
+        return npm.tag
+      }
     })
   })
 }
