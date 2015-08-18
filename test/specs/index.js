@@ -6,7 +6,8 @@ const lastRelease = require('../../')
 
 const npm = {
   registry: 'http://registry.npmjs.org/',
-  tag: 'latest'
+  tag: 'latest',
+  loglevel: 'error'
 }
 
 test('last release from registry', (t) => {
@@ -66,14 +67,22 @@ test('last release from registry', (t) => {
   })
 
   t.test('get nothing from not yet published package name', (tt) => {
+    tt.plan(4)
+
     lastRelease({}, {
       pkg: {name: 'unavailable'},
       npm
     }, (err, release) => {
       tt.error(err)
       tt.is(release.version, undefined, 'no version')
+    })
 
-      tt.end()
+    lastRelease({}, {
+      pkg: {name: 'unavailable-no-body'},
+      npm
+    }, (err, release) => {
+      tt.error(err)
+      tt.is(release.version, undefined, 'no version')
     })
   })
 })
