@@ -3,7 +3,7 @@ const SemanticReleaseError = require('@semantic-release/error')
 const npmlog = require('npmlog')
 const RegClient = require('npm-registry-client')
 
-module.exports = function (pluginConfig, {pkg, npm, plugins}, cb) {
+module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
   let clientConfig = {log: npmlog}
   // disable retries for tests
@@ -22,9 +22,21 @@ module.exports = function (pluginConfig, {pkg, npm, plugins}, cb) {
 
     if (err) return cb(err)
 
-    const version = data['dist-tags'][npm.tag]
+    let version = data['dist-tags'][npm.tag]
 
-    if (!version) return cb(new SemanticReleaseError(`There is no release with the dist-tag "${npm.tag}" yet. Tag a version first.`, 'ENODISTTAG'))
+    if (!version &&
+      options &&
+      options.fallbackTags &&
+      options.fallbackTags[npm.tag] &&
+      data['dist-tags'][options.fallbackTags[npm.tag]]) {
+      version = data['dist-tags'][options.fallbackTags[npm.tag]]
+    }
+
+    if (!version) {
+      return cb(new SemanticReleaseError(
+`There is no release with the dist-tag "${npm.tag}" yet.
+Tag a version manually or define "fallbackTags".`, 'ENODISTTAG'))
+    }
 
     cb(null, {
       version,

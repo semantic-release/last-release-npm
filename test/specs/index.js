@@ -11,7 +11,7 @@ const npm = {
 }
 
 test('last release from registry', (t) => {
-  t.plan(5)
+  t.plan(6)
 
   t.test('get release from package name', (tt) => {
     lastRelease({}, {
@@ -36,6 +36,25 @@ test('last release from registry', (t) => {
       tt.is(release.version, '0.8.15', 'version')
       tt.is(release.gitHead, 'bar', 'gitHead')
       tt.is(release.tag, 'foo', 'dist-tag')
+
+      tt.end()
+    })
+  })
+
+  t.test('get release from a fallbackTag', (tt) => {
+    lastRelease({}, {
+      pkg: {name: 'tagged'},
+      options: {
+        fallbackTags: {
+          bar: 'latest'
+        }
+      },
+      npm: defaults({tag: 'bar'}, npm)
+    }, (err, release) => {
+      tt.error(err)
+      tt.is(release.version, '1.33.7', 'version')
+      tt.is(release.gitHead, 'HEAD', 'gitHead')
+      tt.is(release.tag, 'bar', 'dist-tag')
 
       tt.end()
     })
