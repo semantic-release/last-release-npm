@@ -67,22 +67,39 @@ test('last release from registry', (t) => {
   })
 
   t.test('get nothing from not yet published package name', (tt) => {
-    tt.plan(4)
+    tt.plan(3)
 
-    lastRelease({}, {
-      pkg: {name: 'unavailable'},
-      npm
-    }, (err, release) => {
-      tt.error(err)
-      tt.is(release.version, undefined, 'no version')
+    tt.test('unavailable', (ttt) => {
+      lastRelease({}, {
+        pkg: {name: 'unavailable'},
+        npm
+      }, (err, release) => {
+        ttt.error(err)
+        ttt.is(release.version, undefined, 'no version')
+        ttt.end()
+      })
     })
 
-    lastRelease({}, {
-      pkg: {name: 'unavailable-no-body'},
-      npm
-    }, (err, release) => {
-      tt.error(err)
-      tt.is(release.version, undefined, 'no version')
+    tt.test('unavailable w/o response body', (ttt) => {
+      lastRelease({}, {
+        pkg: {name: 'unavailable-no-body'},
+        npm
+      }, (err, release) => {
+        ttt.error(err)
+        ttt.is(release.version, undefined, 'no version')
+        ttt.end()
+      })
+    })
+
+    tt.test('unavailable w/o status code', (ttt) => {
+      lastRelease({retry: {count: 1, factor: 1, minTimeout: 1, maxTimeout: 2}}, {
+        pkg: {name: 'unavailable-no-404'},
+        npm
+      }, (err, release) => {
+        ttt.error(err)
+        ttt.is(release.version, undefined, 'no version')
+        ttt.end()
+      })
     })
   })
 })

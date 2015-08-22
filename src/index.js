@@ -5,12 +5,21 @@ const RegClient = require('npm-registry-client')
 
 module.exports = function (pluginConfig, {pkg, npm, plugins}, cb) {
   npmlog.level = npm.loglevel || 'warn'
-  const client = new RegClient({log: npmlog})
+  let clientConfig = {log: npmlog}
+  // disable retries for tests
+  if (pluginConfig.retry) clientConfig.retry = pluginConfig.retry
+  const client = new RegClient(clientConfig)
 
   client.get(`${npm.registry}${pkg.name.replace('/', '%2F')}`, {
     auth: npm.auth
   }, (err, data) => {
-    if (err && err.statusCode === 404) return cb(null, {})
+    if (err && (
+      err.statusCode === 404 ||
+      /not found/i.test(err.message)
+    )) {
+      return cb(null, {})
+    }
+
     if (err) return cb(err)
 
     const version = data['dist-tags'][npm.tag]
