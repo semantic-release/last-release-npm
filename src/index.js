@@ -7,7 +7,7 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
   let clientConfig = {log: npmlog}
   // disable retries for tests
-  if (pluginConfig.retry) clientConfig.retry = pluginConfig.retry
+  if (pluginConfig && pluginConfig.retry) clientConfig.retry = pluginConfig.retry
   const client = new RegClient(clientConfig)
 
   client.get(`${npm.registry}${pkg.name.replace('/', '%2F')}`, {
