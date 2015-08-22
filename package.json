@@ -40,7 +40,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "next"
+  },
+  "release": {
+    "branch": "next"
   },
   "repository": {
     "type": "git",
