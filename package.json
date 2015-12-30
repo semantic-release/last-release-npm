@@ -28,7 +28,7 @@
     "rimraf": "^2.4.2",
     "semantic-release": "^4.0.3",
     "standard": "^5.1.0",
-    "tap": "^2.3.1"
+    "tap": "^3.0.0"
   },
   "homepage": "https://github.com/semantic-release/last-release-npm#readme",
   "keywords": [
