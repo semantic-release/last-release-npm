@@ -21,7 +21,7 @@
   "devDependencies": {
     "babel": "^5.8.21",
     "coveralls": "^2.11.2",
-    "lodash": "^3.10.1",
+    "lodash": "^4.2.0",
     "mkdirp": "^0.5.1",
     "nock": "^3.4.0",
     "nyc": "^5.0.0",
