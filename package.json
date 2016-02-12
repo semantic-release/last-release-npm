@@ -19,7 +19,7 @@
     "npmlog": "^2.0.0"
   },
   "devDependencies": {
-    "babel": "^6.5.1",
+    "babel": "^6.5.2",
     "coveralls": "^2.11.2",
     "lodash": "^4.2.1",
     "mkdirp": "^0.5.1",
