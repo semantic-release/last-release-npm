@@ -1,7 +1,6 @@
-const SemanticReleaseError = require('@semantic-release/error')
-
-const npmlog = require('npmlog')
-const RegClient = require('npm-registry-client')
+import SemanticReleaseError from '@semantic-release/error'
+import RegClient from 'npm-registry-client'
+import npmlog from 'npmlog'
 
 module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
