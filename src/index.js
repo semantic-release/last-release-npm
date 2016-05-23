@@ -7,7 +7,7 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
   let clientConfig = {log: npmlog}
   if (npm.cafile && fs.existsSync(npm.cafile)) {
-    clientConfig.ssl = {ca: fs.readFileSync(npm.cafile, 'utf-8')};
+    clientConfig.ssl = {ca: fs.readFileSync(npm.cafile, 'utf-8')}
   }
   // disable retries for tests
   if (pluginConfig && pluginConfig.retry) clientConfig.retry = pluginConfig.retry
