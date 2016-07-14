@@ -1,6 +1,7 @@
 import SemanticReleaseError from '@semantic-release/error'
 import RegClient from 'npm-registry-client'
 import npmlog from 'npmlog'
+import semver from 'semver'
 
 module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
@@ -31,6 +32,16 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
       version = data['dist-tags'][options.fallbackTags[npm.tag]]
     }
 
+    let gitHead = data.versions[version].gitHead
+    let publishHistory = Object.keys(data['time'])
+    if (publishHistory.length > 1) {
+      let unpublishedVersion = publishHistory[publishHistory.length-1]
+
+      if (unpublishedVersion !== version && semver.valid(unpublishedVersion) && semver.valid(version) && semver.gt(unpublishedVersion, version)) {
+        version = unpublishedVersion
+      }
+    }
+
     if (!version) {
       return cb(new SemanticReleaseError(
 `There is no release with the dist-tag "${npm.tag}" yet.
@@ -39,7 +50,7 @@ Tag a version manually or define "fallbackTags".`, 'ENODISTTAG'))
 
     cb(null, {
       version,
-      gitHead: data.versions[version].gitHead,
+      gitHead: gitHead,
       get tag () {
         npmlog.warn('deprecated', 'tag will be removed with the next major release')
         return npm.tag
