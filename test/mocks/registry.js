@@ -24,10 +24,18 @@ const availableModule = {
 module.exports = nock('http://registry.npmjs.org')
   .get('/available')
   .reply(200, availableModule)
-  .get('/unpublished')
+  .get('/unpublishedSingle')
   .reply(200, () => {
     let response = availableModule
     response.time['1.33.8'] = '2016-07-13T03:36:36.168Z'
+
+    return response
+  })
+  .get('/unpublishedMultiple')
+  .reply(200, () => {
+    let response = availableModule
+    response.time['1.33.8'] = '2016-07-13T03:36:36.168Z'
+    response.time['1.33.9'] = '2016-07-13T03:38:38.168Z'
 
     return response
   })

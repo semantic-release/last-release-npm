@@ -11,7 +11,7 @@ const npm = {
 }
 
 test('last release from registry', (t) => {
-  t.plan(7)
+  t.plan(8)
 
   t.test('get release from package name', (tt) => {
     lastRelease({}, {
@@ -122,13 +122,27 @@ test('last release from registry', (t) => {
     })
   })
 
-  t.test('get release from unpublished package', (tt) => {
+  t.test('get release from package with a single unpublished version', (tt) => {
     lastRelease({}, {
-      pkg: {name: 'unpublished'},
+      pkg: {name: 'unpublishedSingle'},
       npm
     }, (err, release) => {
       tt.error(err)
       tt.is(release.version, '1.33.8', 'version')
+      tt.is(release.gitHead, 'HEAD', 'gitHead')
+      tt.is(release.tag, 'latest', 'dist-tag')
+
+      tt.end()
+    })
+  })
+
+  t.test('get release from package with multiple unpublished versions', (tt) => {
+    lastRelease({}, {
+      pkg: {name: 'unpublishedMultiple'},
+      npm
+    }, (err, release) => {
+      tt.error(err)
+      tt.is(release.version, '1.33.9', 'version')
       tt.is(release.gitHead, 'HEAD', 'gitHead')
       tt.is(release.tag, 'latest', 'dist-tag')
 
