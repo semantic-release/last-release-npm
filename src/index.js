@@ -23,6 +23,8 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
     if (err) return cb(err)
 
     let version = data['dist-tags'][npm.tag]
+    let unpublishedVersionsExist = false
+    let latestUnpublishedVersion
 
     if (!version &&
       options &&
@@ -30,15 +32,21 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
       options.fallbackTags[npm.tag] &&
       data['dist-tags'][options.fallbackTags[npm.tag]]) {
       version = data['dist-tags'][options.fallbackTags[npm.tag]]
-    }
+    } else {
+      let publishedLog = Object.keys(data.time).filter(semver.valid)
+      let publishedVersions = Object.keys(data.versions).filter(semver.valid)
+      let unpublishedVersions = publishedLog.filter(x => publishedVersions.indexOf(x) < 0).concat(publishedVersions.filter(x => publishedLog.indexOf(x) < 0))
 
-    let gitHead = data.versions[version].gitHead
-    let publishHistory = Object.keys(data['time'])
-    if (publishHistory.length > 1) {
-      let unpublishedVersion = publishHistory[publishHistory.length-1]
+      if (unpublishedVersions.length > 0) {
+        unpublishedVersionsExist = true
 
-      if (unpublishedVersion !== version && semver.valid(unpublishedVersion) && semver.valid(version) && semver.gt(unpublishedVersion, version)) {
-        version = unpublishedVersion
+        if (unpublishedVersions.length === 1) {
+          latestUnpublishedVersion = unpublishedVersions[0]
+        } else {
+          latestUnpublishedVersion = unpublishedVersions.reduce((prev, current) => {
+            return (semver.gt(prev, current) ? prev : current)
+          })
+        }
       }
     }
 
@@ -49,8 +57,8 @@ Tag a version manually or define "fallbackTags".`, 'ENODISTTAG'))
     }
 
     cb(null, {
-      version,
-      gitHead: gitHead,
+      version: (unpublishedVersionsExist ? latestUnpublishedVersion : version),
+      gitHead: data.versions[version].gitHead,
       get tag () {
         npmlog.warn('deprecated', 'tag will be removed with the next major release')
         return npm.tag
