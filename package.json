@@ -28,7 +28,7 @@
     "nyc": "^6.4.4",
     "rimraf": "^2.4.2",
     "semantic-release": "^4.0.3",
-    "standard": "^7.1.1",
+    "standard": "^8.0.0",
     "tap": "^6.3.2"
   },
   "homepage": "https://github.com/semantic-release/last-release-npm#readme",
