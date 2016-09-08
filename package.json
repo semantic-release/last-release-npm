@@ -29,7 +29,7 @@
     "rimraf": "^2.4.2",
     "semantic-release": "^4.0.3",
     "standard": "^7.1.1",
-    "tap": "^6.3.2"
+    "tap": "^7.1.1"
   },
   "homepage": "https://github.com/semantic-release/last-release-npm#readme",
   "keywords": [
