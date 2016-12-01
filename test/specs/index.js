@@ -11,7 +11,7 @@ const npm = {
 }
 
 test('last release from registry', (t) => {
-  t.plan(6)
+  t.plan(7)
 
   t.test('get release from package name', (tt) => {
     lastRelease({}, {
@@ -81,6 +81,17 @@ test('last release from registry', (t) => {
       tt.is(release.gitHead, 'HEAD', 'gitHead')
       tt.is(release.tag, 'latest', 'dist-tag')
 
+      tt.end()
+    })
+  })
+
+  t.test('get nothing from completely unpublished package name', (tt) => {
+    lastRelease({}, {
+      pkg: {name: 'completely-unpublished'},
+      npm
+    }, (err, release) => {
+      tt.error(err)
+      tt.is(release.version, undefined, 'no version')
       tt.end()
     })
   })
