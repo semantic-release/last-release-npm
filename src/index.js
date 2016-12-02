@@ -12,28 +12,29 @@ module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   client.get(`${npm.registry}${pkg.name.replace('/', '%2F')}`, {
     auth: npm.auth
   }, (err, data) => {
-    if (err && (
-      err.statusCode === 404 ||
-      /not found/i.test(err.message)
-    )) {
+    const isNotFound = err && (err.statusCode === 404 || /not found/i.test(err.message))
+    const isCompletelyUnpublished = data && !data['dist-tags']
+
+    if (isNotFound || isCompletelyUnpublished) {
       return cb(null, {})
     }
 
     if (err) return cb(err)
 
-    let version = data['dist-tags'][npm.tag]
+    const distTags = data['dist-tags']
+    let version = distTags[npm.tag]
 
     if (!version &&
       options &&
       options.fallbackTags &&
       options.fallbackTags[npm.tag] &&
-      data['dist-tags'][options.fallbackTags[npm.tag]]) {
-      version = data['dist-tags'][options.fallbackTags[npm.tag]]
+      distTags[options.fallbackTags[npm.tag]]) {
+      version = distTags[options.fallbackTags[npm.tag]]
     }
 
     if (!version) {
       return cb(new SemanticReleaseError(
-`There is no release with the dist-tag "${npm.tag}" yet.
+        `There is no release with the dist-tag "${npm.tag}" yet.
 Tag a version manually or define "fallbackTags".`, 'ENODISTTAG'))
     }
 
