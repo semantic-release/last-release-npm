@@ -15,6 +15,16 @@ const availableModule = {
   }
 }
 
+const completelyUnpublishedModule = {
+  name: 'i-am-completely-unpublished',
+  time: {
+    '2.0.0': '2016-12-01T17:50:30.699Z',
+    unpublished: {
+      time: '2016-12-01T17:53:45.940Z'
+    }
+  }
+}
+
 module.exports = nock('http://registry.npmjs.org')
   .get('/available')
   .reply(200, availableModule)
@@ -25,6 +35,8 @@ module.exports = nock('http://registry.npmjs.org')
   .reply(200, availableModule)
   .get('/@scoped%2Favailable')
   .reply(200, availableModule)
+  .get('/completely-unpublished')
+  .reply(200, completelyUnpublishedModule)
   .get('/unavailable')
   .reply(404, {})
   .get('/unavailable-no-body')
