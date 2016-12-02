@@ -1,7 +1,13 @@
 {
   "name": "@semantic-release/last-release-npm",
   "description": "determine the version of the last release via the npm registry",
+  "version": "0.0.0-development",
   "author": "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/semantic-release/last-release-npm/issues"
   },
@@ -30,6 +36,9 @@
     "semantic-release": "^6.3.2",
     "standard": "^8.5.0",
     "tap": "^8.0.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   },
   "homepage": "https://github.com/semantic-release/last-release-npm#readme",
   "keywords": [
@@ -61,13 +70,5 @@
     "test": "npm run test:style && npm run test:suite",
     "test:style": "standard",
     "test:suite": "nyc tap --no-cov .test/specs/*.js"
-  },
-  "eslintConfig": {
-    "extends": "standard"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
   }
 }
