@@ -33,7 +33,7 @@
     "nock": "^9.0.0",
     "nyc": "^11.2.1",
     "rimraf": "^2.4.2",
-    "semantic-release": "^6.3.2",
+    "semantic-release": "^7.0.1",
     "standard": "^8.5.0",
     "tap": "^9.0.0"
   },
