@@ -1,3 +1,4 @@
+import fs from 'fs'
 import SemanticReleaseError from '@semantic-release/error'
 import RegClient from 'npm-registry-client'
 import npmlog from 'npmlog'
@@ -5,6 +6,9 @@ import npmlog from 'npmlog'
 module.exports = function (pluginConfig, {pkg, npm, plugins, options}, cb) {
   npmlog.level = npm.loglevel || 'warn'
   let clientConfig = {log: npmlog}
+  if (npm.cafile && fs.existsSync(npm.cafile)) {
+    clientConfig.ssl = {ca: fs.readFileSync(npm.cafile, 'utf-8')}
+  }
   // disable retries for tests
   if (pluginConfig && pluginConfig.retry) clientConfig.retry = pluginConfig.retry
   const client = new RegClient(clientConfig)
