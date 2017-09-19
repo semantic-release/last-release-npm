@@ -50,11 +50,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "publishConfig": {
-    "access": "public",
-    "tag": "next"
-  },
-  "release": {
-    "branch": "next"
+    "access": "public"
   },
   "repository": {
     "type": "git",
