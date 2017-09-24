@@ -27,17 +27,34 @@
     "coveralls": "^2.11.2",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^4.7.0",
+    "eslint-config-prettier": "^2.5.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-prettier": "^2.3.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "lodash": "^4.2.1",
     "mkdirp": "^0.5.1",
     "nock": "^9.0.0",
     "nyc": "^11.2.1",
+    "prettier": "^1.7.0",
     "rimraf": "^2.4.2",
     "semantic-release": "^8.0.0",
-    "standard": "^8.5.0",
     "tap": "^9.0.0"
   },
   "eslintConfig": {
-    "extends": "standard"
+    "extends": [
+      "standard",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": 2
+    }
   },
   "homepage": "https://github.com/semantic-release/last-release-npm#readme",
   "keywords": [
@@ -48,6 +65,12 @@
   ],
   "license": "MIT",
   "main": "dist/index.js",
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "es5"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -62,6 +85,7 @@
     "coverage:upload": "npm run coverage -- --reporter=text-lcov | coveralls",
     "pretest:suite": "npm run build && npm run build:tests",
     "cm": "git-cz",
+    "lint": "eslint .",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "test": "npm run test:style && npm run test:suite",
     "test:style": "standard",
