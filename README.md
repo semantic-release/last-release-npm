@@ -1,14 +1,14 @@
-# semantic-release last-release-npm
+# semantic-release/last-release-npm
 
-[![npm version](https://badge.fury.io/js/%40semantic-release%2Flast-release-npm.svg)](http://badge.fury.io/js/%40semantic-release%2Flast-release-npm)
-[![Build Status](https://travis-ci.org/semantic-release/last-release-npm.svg?branch=next)](https://travis-ci.org/semantic-release/last-release-npm)
+Default `getLastRelease` plugin for [semantic-release](https://github.com/semantic-release/semantic-release)
 
-[![Dependency Status](https://david-dm.org/semantic-release/last-release-npm/next.svg)](https://david-dm.org/semantic-release/last-release-npm/next)
-[![devDependency Status](https://david-dm.org/semantic-release/last-release-npm/next/dev-status.svg)](https://david-dm.org/semantic-release/last-release-npm/next#info=devDependencies)
+[![npm](https://img.shields.io/npm/v/@semantic-release/last-release-npm.svg)](https://www.npmjs.com/package/@semantic-release/last-release-npm)
+[![npm](https://img.shields.io/npm/dt/@semantic-release/last-release-npm.svg)](https://www.npmjs.com/package/@semantic-release/last-release-npm)
+[![Greenkeeper badge](https://badges.greenkeeper.io/semantic-release/last-release-npm.svg)](https://greenkeeper.io/)
 [![license](https://img.shields.io/github/license/semantic-release/last-release-npm.svg)](https://github.com/semantic-release/last-release-npm/blob/master/LICENSE)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-[![Join the chat at https://gitter.im/semantic-release/semantic-release](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/semantic-release/semantic-release?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/last-release-npm)
+[![Travis](https://img.shields.io/travis/semantic-release/last-release-npm.svg)](https://travis-ci.org/semantic-release/last-release-npm)
 [![Codecov](https://img.shields.io/codecov/c/github/semantic-release/last-release-npm.svg)](https://codecov.io/gh/semantic-release/last-release-npm)

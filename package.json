@@ -1,6 +1,6 @@
 {
   "name": "@semantic-release/last-release-npm",
-  "description": "determine the version of the last release via the npm registry",
+  "description": "Determine the version of the last release via the npm registry",
   "version": "0.0.0-development",
   "author": "Stephan Bönnemann <stephan@boennemann.me> (http://boennemann.me)",
   "bugs": {
