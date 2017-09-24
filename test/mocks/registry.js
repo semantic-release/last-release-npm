@@ -1,29 +1,29 @@
-const nock = require('nock')
+const nock = require('nock');
 
 const availableModule = {
   'dist-tags': {
     latest: '1.33.7',
-    foo: '0.8.15'
+    foo: '0.8.15',
   },
   versions: {
     '0.8.15': {
-      gitHead: 'bar'
+      gitHead: 'bar',
     },
     '1.33.7': {
-      gitHead: 'HEAD'
-    }
-  }
-}
+      gitHead: 'HEAD',
+    },
+  },
+};
 
 const completelyUnpublishedModule = {
   name: 'i-am-completely-unpublished',
   time: {
     '2.0.0': '2016-12-01T17:50:30.699Z',
     unpublished: {
-      time: '2016-12-01T17:53:45.940Z'
-    }
-  }
-}
+      time: '2016-12-01T17:53:45.940Z',
+    },
+  },
+};
 
 module.exports = nock('http://registry.npmjs.org')
   .get('/available')
@@ -43,4 +43,4 @@ module.exports = nock('http://registry.npmjs.org')
   .reply(404)
   .get('/unavailable-no-404')
   .times(2)
-  .replyWithError({message: 'not found', statusCode: 500, code: 'E500'})
+  .replyWithError({message: 'not found', statusCode: 500, code: 'E500'});
