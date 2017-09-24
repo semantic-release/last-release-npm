@@ -6,6 +6,7 @@
 
 [![Dependency Status](https://david-dm.org/semantic-release/last-release-npm/next.svg)](https://david-dm.org/semantic-release/last-release-npm/next)
 [![devDependency Status](https://david-dm.org/semantic-release/last-release-npm/next/dev-status.svg)](https://david-dm.org/semantic-release/last-release-npm/next#info=devDependencies)
+[![license](https://img.shields.io/github/license/semantic-release/last-release-npm.svg)](https://github.com/semantic-release/last-release-npm/blob/master/LICENSE)
 
 [![Join the chat at https://gitter.im/semantic-release/semantic-release](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/semantic-release/semantic-release?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/last-release-npm)
