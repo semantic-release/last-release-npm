@@ -23,5 +23,5 @@ script:
   - npm run test
 
 after_success:
-  - npm run coverage:upload
+  - npm run codecov
   - npm run semantic-release

@@ -17,7 +17,8 @@
     "npmlog": "^4.0.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
+    "ava": "^0.22.0",
+    "codecov": "^2.3.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.7.0",
@@ -33,8 +34,7 @@
     "nyc": "^11.2.1",
     "prettier": "^1.7.0",
     "rimraf": "^2.4.2",
-    "semantic-release": "^8.0.0",
-    "tap": "^9.0.0"
+    "semantic-release": "^8.0.0"
   },
   "engines": {
     "node": ">=4"
@@ -63,6 +63,20 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "nyc": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "include": [
+      "index.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true
+  },
   "prettier": {
     "printWidth": 120,
     "singleQuote": true,
@@ -77,14 +91,13 @@
     "url": "https://github.com/semantic-release/last-release-npm.git"
   },
   "scripts": {
-    "coverage": "nyc report",
-    "coverage:upload": "npm run coverage -- --reporter=text-lcov | coveralls",
-    "pretest:suite": "npm run build && npm run build:tests",
+    "clean": "rimraf coverage && rimraf .nyc_output",
     "cm": "git-cz",
+    "codecov": "codecov",
+    "coverage": "nyc check-coverage",
     "lint": "eslint .",
+    "pretest": "npm run clean && npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "test": "npm run test:style && npm run test:suite",
-    "test:style": "standard",
-    "test:suite": "nyc tap --no-cov .test/specs/*.js"
+    "test": "nyc ava -v"
   }
 }
