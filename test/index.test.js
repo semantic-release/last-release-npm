@@ -99,12 +99,38 @@ test.serial('Get nothing from not yet published package name (unavailable w/o re
 
 test.serial('Get nothing from not yet published package name (unavailable w/o status code)', async t => {
   const name = 'unavailable-no-404';
-  const registry = mock(name).replyWithError({message: 'not found', statusCode: 500, code: 'E500'});
+  const registry = mock(name)
+    .times(3)
+    .replyWithError({message: 'not found', statusCode: 500, code: 'E500'});
   const release = await promisify(lastRelease)(
     {retry: {count: 1, factor: 1, minTimeout: 1, maxTimeout: 2}},
-    {pkg: {name: 'unavailable-no-404'}, npm}
+    {pkg: {name}, npm}
   );
 
   t.is(release.version, undefined);
+  t.true(registry.isDone());
+});
+
+test.serial('Throws error on server error', async t => {
+  const name = 'server-error';
+  const registry = mock(name)
+    .times(3)
+    .reply(500);
+  await t.throws(
+    promisify(lastRelease)({retry: {count: 1, factor: 1, minTimeout: 1, maxTimeout: 2}}, {pkg: {name}, npm}),
+    /500 Internal Server Error/
+  );
+
+  t.true(registry.isDone());
+});
+
+test.serial('Accept an undefined "pluginConfig"', async t => {
+  const name = 'available';
+  const registry = available(name);
+  const release = await promisify(lastRelease)(undefined, {pkg: {name}, npm});
+
+  t.is(release.version, '1.33.7');
+  t.is(release.gitHead, 'HEAD');
+  t.is(release.tag, 'latest');
   t.true(registry.isDone());
 });
