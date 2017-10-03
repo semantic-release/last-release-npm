@@ -1,4 +1,5 @@
 const {promisify} = require('util');
+const {resolve} = require('url');
 const SemanticReleaseError = require('@semantic-release/error');
 const RegClient = require('npm-registry-client');
 const npmlog = require('npmlog');
@@ -7,7 +8,7 @@ module.exports = async function({retry} = {}, {pkg, npm, options}, cb) {
   npmlog.level = npm.loglevel || 'warn';
   const client = new RegClient({log: npmlog, retry});
   try {
-    const data = await promisify(client.get.bind(client))(`${npm.registry}${pkg.name.replace('/', '%2F')}`, {
+    const data = await promisify(client.get.bind(client))(resolve(npm.registry, pkg.name.replace('/', '%2F')), {
       auth: npm.auth,
     });
     if (data && !data['dist-tags']) {

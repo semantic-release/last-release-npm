@@ -134,3 +134,17 @@ test.serial('Accept an undefined "pluginConfig"', async t => {
   t.is(release.tag, 'latest');
   t.true(registry.isDone());
 });
+
+test.serial('Handle missing trailing slash on registry URL', async t => {
+  const name = 'available';
+  const registry = available(name);
+  const release = await promisify(lastRelease)(
+    {},
+    {pkg: {name}, npm: defaults({registry: 'http://registry.npmjs.org'}, npm)}
+  );
+
+  t.is(release.version, '1.33.7');
+  t.is(release.gitHead, 'HEAD');
+  t.is(release.tag, 'latest');
+  t.true(registry.isDone());
+});
